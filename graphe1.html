@@ -1,0 +1,264 @@
+
+<html>
+<head>
+ <meta charset='UTF-8'>
+ <title>Statistiques de la formation</title>
+
+ 
+</head>
+<body>
+ <!-- Create a div where the graph will take place -->
+
+<div style="float: left;" id="my_dataviz" ></div>
+<div style="float: left;">
+  <svg id="my_dataviz2" height=1000 width=900 ></svg>
+</div>
+
+<!-- Load d3.js & color scale -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src='//d3js.org/d3.v5.min.js'></script>
+
+<script>
+  var values = {"Pas besoin":1, "Besoin d'approfondissement":2, "Besoin urgent":3, "je ne connais pas du tout":0,"je connais un peu":1,"je connais bien":2,"je suis expert(e)":3};
+  var competenceTable = new Array("analyser des bases de données" , "connaître les base du langage HTML 5", "connaître les bases du responsive web design (RWD)", 
+	"connaître les outils d’édition web (éditeurs html, CSS, …)",
+	"savoir faire fonctionner, sur un site, un service de type « e-commerce » (vente de produits, …)", 
+	"savoir gérer la publication à distance d’un site web", 
+	"savoir gérer un projet" , 
+	"savoir gérer un site multilingue",
+"savoir gérer une communauté en ligne",
+"savoir intégrer, dans un page, des outils de diffusion web 2 (twitter, facebook, …)",
+"savoir mettre en place des enquêtes enligne",
+"savoir mettre en place des outils de type « ranking »",
+"savoir mettre en place et exploiter des outils de veille d’information",
+"savoir mettre en place et gérer un forum de discussion",
+"savoir mettre en place et gérer un service de type « newsletter » (impliquant la mise en place et la gestion d’un annuaire d’abonnés)",
+"savoir prototyper des innovations numériques",
+"savoir réaliser des podcasts",
+"savoir réaliser et diffuser des e-publications : brochures, dépliants, publications multimédias, …",
+"savoir scénariser et réaliser des rubriques multimédias (« page vidéo », « page photo », exposition virtuelle, …)",
+"savoir scénariser et réaliser les rubriques « statiques » d’un site web",
+"savoir travailler avec le RSS",
+"savoir utiliser correctement les métadonnées pour une meilleure diffusion des contenus du site",
+"savoir utiliser des cartes géographiques interactives",
+"savoir utiliser des outils de gestion d’accès aux rubriques (accès par mot de passe, …)",
+"savoir utiliser les programmes de liens sponsorisés",
+"utiliser les méthodes agiles de développement");
+
+
+d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRPYNknmIr5_bU7GfiJtuS_b9fGae7HZwcjAiMoAC24fLzIfxRtXQySMu3E95D3M595D3DYT7NUtvzt/pub?gid=760811187&single=true&output=csv").then(function(data) {
+  console.log(data[0]);
+
+
+//statistique sur les compétences
+		
+		var prctgCompetence = new Array(); 		
+		for(var j=0;j<competenceTable.length;j++){
+		
+        var competence1=0;
+		var competence2=0;
+		var competence3=0;
+        var totalcompetence=0;
+        var totEtud=0;		
+		for(var i=0; i< data.length; i++){
+		//console.log("pour etudiant "+i+"  la competence"+ competenceTable[j] +"------"+values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']]);
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 0){
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 1){
+		competence3=competence3+5;
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 2){
+		competence1=competence1+8;
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 3){
+		competence2=competence2+10;
+		totEtud++;
+		}
+     }
+        totalcompetence=((competence1+competence2+competence3)/totEtud)*10;
+
+        prctgCompetence[j]=Math.round(totalcompetence);
+        console.log("la resultat du compétence de la classe est    "+ prctgCompetence[j] + "  pour la valeur     "+competenceTable[j]);
+}
+		console.log("***********************************************");
+		prctgCompetence[3]=0;
+		
+		var totale=0;
+		for(var l=0;l<prctgCompetence.length;l++){
+		if(prctgCompetence[l]!='NaN'){
+		totale= totale + prctgCompetence[l];
+		//console.log("prctgCompetence[l] "+ prctgCompetence[l]+"la valeur totale est "+totale+ "   prctgCompetence.length est "+prctgCompetence.length);
+		}
+		
+		
+        }
+
+
+
+//merci a https://www.d3-graph-gallery.com/graph/donut_label.html
+// set the dimensions and margins of the graph
+var width = 600
+    height = 600
+    margin = 100
+
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+var radius = Math.min(width, height) / 2 - margin
+
+// append the svg object to the div called 'my_dataviz'
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+// Create dummy data
+//var data = {java: 60, php: 80, c:50, d:40, e:39, f:63, g:43, h:50,i: 60, j: 80, k:50, l:40, m:39, n:63, o:43, p:50}
+
+var data ={"analyser des bases de données": prctgCompetence[0],
+    "connaître les base du langage HTML 5":prctgCompetence[1],
+    "connaître les bases du responsive web design (RWD)":prctgCompetence[2], 
+	"connaître les outils d’édition web (éditeurs html, CSS, …)":prctgCompetence[3],
+	"savoir faire fonctionner, sur un site, un service de type « e-commerce » (vente de produits, …)":prctgCompetence[4], 
+	"savoir gérer la publication à distance d’un site web":prctgCompetence[5], 
+	"savoir gérer un projet":prctgCompetence[6] , 
+	"savoir gérer un site multilingue":prctgCompetence[7],
+"savoir gérer une communauté en ligne":prctgCompetence[8],
+"savoir integrer, dans un page, des outils de diffusion web 2 (twitter, facebook, …)":prctgCompetence[9],
+"savoir mettre en place des enquêtes enligne":prctgCompetence[10],
+"savoir mettre en place des outils de type « ranking »":prctgCompetence[11],
+"savoir mettre en place et exploiter des outils de veille d’information":prctgCompetence[12],
+"savoir mettre en place et gérer un forum de discussion":prctgCompetence[13],
+"savoir mettre en place et gérer un service de type « newsletter » (impliquant la mise en place et la gestion d’un annuaire d’abonnés)":prctgCompetence[14],
+"savoir prototyper des innovations numériques":prctgCompetence[15],
+"savoir réaliser des podcasts":prctgCompetence[16],
+"savoir réaliser et diffuser des e-publications : brochures, dépliants, publications multimédias, …":prctgCompetence[17],
+"savoir scénariser et réaliser des rubriques multimédias (« page vidéo », « page photo », exposition virtuelle, …)":prctgCompetence[18],
+"savoir scénariser et réaliser les rubriques « statiques » d’un site web":prctgCompetence[19],
+"savoir travailler avec le RSS":prctgCompetence[20],
+"savoir utiliser correctement les métadonnées pour une meilleure diffusion des contenus du site":prctgCompetence[21],
+"savoir utiliser des cartes géographiques interactives":prctgCompetence[22],
+"savoir utiliser des outils de gestion d’accès aux rubriques (accès par mot de passe, …)":prctgCompetence[23],
+"savoir utiliser les programmes de liens sponsorisés":prctgCompetence[24],
+"utiliser les méthodes agiles de développement":prctgCompetence[25]}
+
+
+// set the color scale
+
+var color = d3.scaleOrdinal()
+  .domain(competenceTable)
+  .range(d3.schemeCategory20b );
+
+	
+// Compute the position of each group on the pie:
+var pie = d3.pie()
+  .sort(null) // Do not sort group by size
+  .value(function(d) {return d.value; })
+var data_ready = pie(d3.entries(data))
+
+// The arc generator
+var arc = d3.arc()
+  .innerRadius(radius * 0.5)         // This is the size of the donut hole
+  .outerRadius(radius * 0.8)
+
+// Another arc that won't be drawn. Just for labels positioning
+var outerArc = d3.arc()
+  .innerRadius(radius * 0.9)
+  .outerRadius(radius * 0.9)
+
+// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+svg
+  .selectAll('allSlices')
+  .data(data_ready)
+  .enter()
+  .append('path')
+  .attr('d', arc)
+  .attr('fill', function(d){ return(color(d.data.key)) })
+  .attr("stroke", "white")
+  .style("stroke-width", "2px")
+  .style("opacity", 0.7)
+
+// Add the polylines between chart and labels:
+svg
+  .selectAll('allPolylines')
+  .data(data_ready)
+  .enter()
+  .append('polyline')
+    .attr("stroke", "black")
+    .style("fill", "none")
+    .attr("stroke-width", 1)
+    .attr('points', function(d) {
+      var posA = arc.centroid(d) // line insertion in the slice
+      var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+      var posC = outerArc.centroid(d); // Label position = almost the same as posB
+      var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+      posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+      return [posA, posB, posC]
+    })
+
+// Add the polylines between chart and labels:
+svg
+  .selectAll('allLabels')
+  .data(data_ready)
+  .enter()
+  .append('text')
+    .text( function(d) { console.log(d.data.value) ; return d.data.value} )
+    .attr('transform', function(d) {
+        var pos = outerArc.centroid(d);
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+        return 'translate(' + pos + ')';
+    })
+    .style('text-anchor', function(d) {
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+        return (midangle < Math.PI ? 'start' : 'end')
+    })
+
+
+
+// select the svg area
+var Svg = d3.select("#my_dataviz2")
+
+// create a list of keys
+//var keys = ["a", "b", "c", "d", "e", "f", "g", "h","i", "j", "k", "l", "m", "n", "o", "p"]
+
+// Usually you have a color scale in your chart already
+/*var color = d3.scaleOrdinal()
+  .domain(keys)
+  .range(d3.schemeSet2);*/
+
+// Add one dot in the legend for each name.
+Svg.selectAll("mydots")
+  .data(competenceTable )
+  .enter()
+  .append("circle")
+    .attr("cx", 100)
+    .attr("cy", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .attr("r", 7)
+    .style("fill", function(d){ return color(d)})
+
+// Add one dot in the legend for each name.
+Svg.selectAll("mylabels")
+  .data(competenceTable)
+  .enter()
+  .append("text")
+    .attr("x", 120)
+    .attr("y", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .style("fill", function(d){ return color(d)})
+    .text(function(d){ return d})
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
+	
+	
+	});
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,583 @@
+<html>
+<head>
+ <meta charset='UTF-8'>
+ <title>Statistiques de la formation</title>
+ 
+ <style>
+        html, body, #wrapper{
+            height:'100%';
+            width:'100%';
+        }
+    </style>
+</head>
+<body>
+ <div id='wrapper'></div>
+
+<div id="pieChart" style="position: relative;"></div>
+<div id="pieChart2" style="position: relative;"></div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.7.2/d3.min.js"></script>
+<script src="d3pie.min.js"></script>
+<script src='//d3js.org/d3.v5.min.js'></script>
+<script>
+	var values = {"Pas besoin":1, "Besoin d'approfondissement":2, "Besoin urgent":3, "je ne connais pas du tout":0,"je connais un peu":1,"je connais bien":2,"je suis expert(e)":3};
+    
+	
+	
+    var competenceTable = new Array("analyser des bases de données" , "connaître les base du langage HTML 5", "connaître les bases du responsive web design (RWD)", 
+	"connaître les outils d’édition web (éditeurs html, CSS, …)",
+	"savoir faire fonctionner, sur un site, un service de type « e-commerce » (vente de produits, …)", 
+	"savoir gérer la publication à distance d’un site web", 
+	"savoir gérer un projet" , 
+	"savoir gérer un site multilingue",
+"savoir gérer une communauté en ligne",
+"savoir intégrer, dans un page, des outils de diffusion web 2 (twitter, facebook, …)",
+"savoir mettre en place des enquêtes enligne",
+"savoir mettre en place des outils de type « ranking »",
+"savoir mettre en place et exploiter des outils de veille d’information",
+"savoir mettre en place et gérer un forum de discussion",
+"savoir mettre en place et gérer un service de type « newsletter » (impliquant la mise en place et la gestion d’un annuaire d’abonnés)",
+"savoir prototyper des innovations numériques",
+"savoir réaliser des podcasts",
+"savoir réaliser et diffuser des e-publications : brochures, dépliants, publications multimédias, …",
+"savoir scénariser et réaliser des rubriques multimédias (« page vidéo », « page photo », exposition virtuelle, …)",
+"savoir scénariser et réaliser les rubriques « statiques » d’un site web",
+"savoir travailler avec le RSS",
+"savoir utiliser correctement les métadonnées pour une meilleure diffusion des contenus du site",
+"savoir utiliser des cartes géographiques interactives",
+"savoir utiliser des outils de gestion d’accès aux rubriques (accès par mot de passe, …)",
+"savoir utiliser les programmes de liens sponsorisés",
+"utiliser les méthodes agiles de développement");
+	
+	
+	
+	
+	
+	
+	var urlData = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRPYNknmIr5_bU7GfiJtuS_b9fGae7HZwcjAiMoAC24fLzIfxRtXQySMu3E95D3M595D3DYT7NUtvzt/pub?gid=760811187&single=true&output=csv';
+    d3.csv(urlData)
+        .then(function(data) {
+            console.log(data);
+        
+		//statistique sur les compétences
+		
+		var prctgCompetence = new Array(); 		
+		for(var j=0;j<competenceTable.length;j++){
+		
+        var competence1=0;
+		var competence2=0;
+		var competence3=0;
+        var totalcompetence=0;
+        var totEtud=0;		
+		for(var i=0; i< data.length; i++){
+		//console.log("pour etudiant "+i+"  la competence"+ competenceTable[j] +"------"+values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']]);
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 0){
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 1){
+		competence3=competence3+5;
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 2){
+		competence1=competence1+8;
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']] == 3){
+		competence2=competence2+10;
+		totEtud++;
+		}
+     }
+        totalcompetence=((competence1+competence2+competence3)/totEtud)*10;
+
+        prctgCompetence[j]=totalcompetence;
+        console.log("la resultat du compétence de la classe est    "+ prctgCompetence[j] + "  pour la valeur     "+competenceTable[j]);
+}
+		console.log("***********************************************");
+		prctgCompetence[3]=0;
+		
+		var totale=0;
+		for(var l=0;l<prctgCompetence.length;l++){
+		if(prctgCompetence[l]!='NaN'){
+		totale= totale + prctgCompetence[l];
+		//console.log("prctgCompetence[l] "+ prctgCompetence[l]+"la valeur totale est "+totale+ "   prctgCompetence.length est "+prctgCompetence.length);
+		}
+		
+		
+        }
+		
+		//statistique sur les besoins globales 
+		
+		var prctBesoins = new Array(); 		
+		for(var j=0;j<competenceTable.length;j++){
+		
+        var besoins1=0;
+		var besoins2=0;
+		var besoins3=0;
+        var totalbesoins=0;
+        var totEtud=0;		
+		for(var i=0; i< data.length; i++){
+		//console.log("pour etudiant "+i+"  la competence"+ competenceTable[j] +"------"+values[data[i]['Quelles sont vos compétences ? ['+competenceTable[j]+']']]);
+		
+		if(values[data[i]['Quelles sont besoins ? ['+competenceTable[j]+']']] == 1){
+		besoins3=besoins3+5;
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont besoins ? ['+competenceTable[j]+']']] == 2){
+		besoins1=besoins1+8;
+		totEtud++;
+		}
+		if(values[data[i]['Quelles sont besoins ? ['+competenceTable[j]+']']] == 3){
+		besoins2=besoins2+10;
+		totEtud++;
+		}
+     }
+        totalbesoins=((besoins1+besoins2+besoins3)/totEtud)*10;
+
+        prctBesoins[j]=totalbesoins;
+        console.log("la resultat du besoins globales de la classe est    "+ prctBesoins[j] + "  pour la valeur     "+competenceTable[j]);
+}
+		console.log("*********************************************** Fin de Besoins globales ");
+		prctBesoins[3]=0;
+		
+		var totale=0;
+		for(var l=0;l<prctBesoins.length;l++){
+		if(prctBesoins[l]!='NaN'){
+		totale= totale + prctBesoins[l];
+		//console.log("prctBesoins[l] "+ prctBesoins[l]+"la valeur totale est "+totale+ "   prctBesoins.length est "+prctBesoins.length);
+		}
+		
+		
+        }
+
+		
+            
+        
+				
+
+var pie = new d3pie("pieChart", {
+	"header": {
+		"title": {
+			"text": "Les compétences Globales de la classe",
+			"fontSize": 24,
+			"font": "open sans"
+		},
+		"subtitle": {
+			"text": "",
+			"color": "#999999",
+			"fontSize": 12,
+			"font": "open sans"
+		},
+		"titleSubtitlePadding": 9
+	},
+	"footer": {
+		"color": "#999999",
+		"fontSize": 10,
+		"font": "open sans",
+		"location": "bottom-left"
+	},
+	"size": {
+		"canvasHeight": 650,
+		"canvasWidth": 1500,
+		"pieInnerRadius": "65%",
+		"pieOuterRadius": "90%"
+	},
+	"data": {
+		"sortOrder": "value-desc",
+		"content": [
+			{
+				"label": competenceTable[0],
+				"value": Math.round(prctgCompetence[0]),
+				"color": "#2484c1"
+			},
+			{
+				"label": competenceTable[1],
+				"value": Math.round(prctgCompetence[1]),
+				"color": "#0c6197"
+			},
+			{
+				"label": competenceTable[2],
+				"value": Math.round(prctgCompetence[2]),
+				"color": "#4daa4b"
+			},
+			{
+				"label": competenceTable[3],
+				"value": 1,
+				"color": "#90c469"
+			},
+			{
+				"label": competenceTable[4],
+				"value": Math.round(prctgCompetence[4]),
+				"color": "#daca61"
+			},
+			{
+				"label": competenceTable[5],
+				"value": Math.round(prctgCompetence[5]),
+				"color": "#e4a14b"
+			},
+			{
+				"label": competenceTable[6],
+				"value": Math.round(prctgCompetence[6]),
+				"color": "#e98125"
+			},
+			{
+				"label": competenceTable[7],
+				"value": Math.round(prctgCompetence[7]),
+				"color": "#cb2121"
+			},
+			{
+				"label": competenceTable[8],
+				"value": Math.round(prctgCompetence[8]),
+				"color": "#830909"
+			},
+			{
+				"label": competenceTable[9],
+				"value": Math.round(prctgCompetence[9]),
+				"color": "#923e99"
+			},
+			{
+				"label": competenceTable[10],
+				"value": Math.round(prctgCompetence[10]),
+				"color": "#ae83d5"
+			},
+			{
+				"label": competenceTable[11],
+				"value": Math.round(prctgCompetence[11]),
+				"color": "#bf273e"
+			},
+			{
+				"label": competenceTable[12],
+				"value": Math.round(prctgCompetence[12]),
+				"color": "#ce2aeb"
+			},
+			{
+				"label": competenceTable[13],
+				"value": Math.round(prctgCompetence[13]),
+				"color": "#bca44a"
+			},
+			{
+				"label": competenceTable[14],
+				"value": Math.round(prctgCompetence[14]),
+				"color": "#618d1b"
+			},
+			{
+				"label": competenceTable[15],
+				"value": Math.round(prctgCompetence[15]),
+				"color": "#1ee67b"
+			},
+			{
+				"label": competenceTable[16],
+				"value": Math.round(prctgCompetence[16]),
+				"color": "#b0ec44"
+			},
+			{
+				"label": competenceTable[17],
+				"value": Math.round(prctgCompetence[17]),
+				"color": "#a4a0c9"
+			},
+			{
+				"label": competenceTable[18],
+				"value": Math.round(prctgCompetence[18]),
+				"color": "#322849"
+			},
+			{
+				"label": competenceTable[19],
+				"value": Math.round(prctgCompetence[19]),
+				"color": "#86f71a"
+			},
+			{
+				"label": competenceTable[20],
+				"value": Math.round(prctgCompetence[20]),
+				"color": "#d1c87f"
+			},
+			{
+				"label": competenceTable[21],
+				"value": Math.round(prctgCompetence[21]),
+				"color": "#7d9058"
+			},
+			{
+				"label": competenceTable[22],
+				"value": Math.round(prctgCompetence[22]),
+				"color": "#44b9b0"
+			},
+			{
+				"label": competenceTable[23],
+				"value": Math.round(prctgCompetence[23]),
+				"color": "#7c37c0"
+			},
+			{
+				"label": competenceTable[24],
+				"value": Math.round(prctgCompetence[24]),
+				"color": "#cc9fb1"
+			},
+			{
+				"label": competenceTable[25],
+				"value": Math.round(prctgCompetence[25]),
+				"color": "#e65414"
+			}
+		]
+	},
+	"labels": {
+		"outer": {
+			"pieDistance": 50
+		},
+		"inner": {
+			"hideWhenLessThanPercentage": 1
+		},
+		"mainLabel": {
+			"fontSize": 10
+		},
+		"percentage": {
+			"color": "#ffffff",
+			"decimalPlaces": 0
+		},
+		"value": {
+			"color": "#adadad",
+			"fontSize": 11
+		},
+		"lines": {
+			"enabled": true
+		},
+		"truncation": {
+			"enabled": true
+		}
+	},
+	"effects": {
+		"pullOutSegmentOnClick": {
+			"effect": "linear",
+			"speed": 400,
+			"size": 8
+		}
+	},
+	"misc": {
+		"gradient": {
+			"enabled": true,
+			"percentage": 100
+		},
+		"canvasPadding": {
+			"top": 10,
+			"left": 5
+		}
+	},
+	"callbacks": {}
+	
+});
+
+
+var pie2 = new d3pie("pieChart2", {
+	"header": {
+		"title": {
+			"text": "Les Besoins Globales de la classe",
+			"fontSize": 24,
+			"font": "open sans"
+		},
+		"subtitle": {
+			"text": "",
+			"color": "#999999",
+			"fontSize": 12,
+			"font": "open sans"
+		},
+		"titleSubtitlePadding": 9
+	},
+	"footer": {
+		"color": "#999999",
+		"fontSize": 10,
+		"font": "open sans",
+		"location": "bottom-left"
+	},
+	"size": {
+		"canvasHeight": 650,
+		"canvasWidth": 1500,
+		"pieInnerRadius": "65%",
+		"pieOuterRadius": "90%"
+	},
+	"data": {
+		"sortOrder": "value-desc",
+		"content": [
+			{
+				"label": competenceTable[0],
+				"value": Math.round(prctBesoins[0]),
+				"color": "#2484c1"
+			},
+			{
+				"label": competenceTable[1],
+				"value": Math.round(prctBesoins[1]),
+				"color": "#0c6197"
+			},
+			{
+				"label": competenceTable[2],
+				"value": Math.round(prctBesoins[2]),
+				"color": "#4daa4b"
+			},
+			{
+				"label": competenceTable[3],
+				"value": 1,
+				"color": "#90c469"
+			},
+			{
+				"label": competenceTable[4],
+				"value": Math.round(prctBesoins[4]),
+				"color": "#daca61"
+			},
+			{
+				"label": competenceTable[5],
+				"value": Math.round(prctBesoins[5]),
+				"color": "#e4a14b"
+			},
+			{
+				"label": competenceTable[6],
+				"value": Math.round(prctBesoins[6]),
+				"color": "#e98125"
+			},
+			{
+				"label": competenceTable[7],
+				"value": Math.round(prctBesoins[7]),
+				"color": "#cb2121"
+			},
+			{
+				"label": competenceTable[8],
+				"value": Math.round(prctBesoins[8]),
+				"color": "#830909"
+			},
+			{
+				"label": competenceTable[9],
+				"value": Math.round(prctBesoins[9]),
+				"color": "#923e99"
+			},
+			{
+				"label": competenceTable[10],
+				"value": Math.round(prctBesoins[10]),
+				"color": "#ae83d5"
+			},
+			{
+				"label": competenceTable[11],
+				"value": Math.round(prctBesoins[11]),
+				"color": "#bf273e"
+			},
+			{
+				"label": competenceTable[12],
+				"value": Math.round(prctBesoins[12]),
+				"color": "#ce2aeb"
+			},
+			{
+				"label": competenceTable[13],
+				"value": Math.round(prctBesoins[13]),
+				"color": "#bca44a"
+			},
+			{
+				"label": competenceTable[14],
+				"value": Math.round(prctBesoins[14]),
+				"color": "#618d1b"
+			},
+			{
+				"label": competenceTable[15],
+				"value": Math.round(prctBesoins[15]),
+				"color": "#1ee67b"
+			},
+			{
+				"label": competenceTable[16],
+				"value": Math.round(prctBesoins[16]),
+				"color": "#b0ec44"
+			},
+			{
+				"label": competenceTable[17],
+				"value": Math.round(prctBesoins[17]),
+				"color": "#a4a0c9"
+			},
+			{
+				"label": competenceTable[18],
+				"value": Math.round(prctBesoins[18]),
+				"color": "#322849"
+			},
+			{
+				"label": competenceTable[19],
+				"value": Math.round(prctBesoins[19]),
+				"color": "#86f71a"
+			},
+			{
+				"label": competenceTable[20],
+				"value": Math.round(prctBesoins[20]),
+				"color": "#d1c87f"
+			},
+			{
+				"label": competenceTable[21],
+				"value": Math.round(prctBesoins[21]),
+				"color": "#7d9058"
+			},
+			{
+				"label": competenceTable[22],
+				"value": Math.round(prctBesoins[22]),
+				"color": "#44b9b0"
+			},
+			{
+				"label": competenceTable[23],
+				"value": Math.round(prctBesoins[23]),
+				"color": "#7c37c0"
+			},
+			{
+				"label": competenceTable[24],
+				"value": Math.round(prctBesoins[24]),
+				"color": "#cc9fb1"
+			},
+			{
+				"label": competenceTable[25],
+				"value": Math.round(prctBesoins[25]),
+				"color": "#e65414"
+			}
+		]
+	},
+	"labels": {
+		"outer": {
+			"pieDistance": 50
+		},
+		"inner": {
+			"hideWhenLessThanPercentage": 1
+		},
+		"mainLabel": {
+			"fontSize": 10
+		},
+		"percentage": {
+			"color": "#ffffff",
+			"decimalPlaces": 0
+		},
+		"value": {
+			"color": "#adadad",
+			"fontSize": 11
+		},
+		"lines": {
+			"enabled": true
+		},
+		"truncation": {
+			"enabled": true
+		}
+	},
+	"effects": {
+		"pullOutSegmentOnClick": {
+			"effect": "linear",
+			"speed": 400,
+			"size": 8
+		}
+	},
+	"misc": {
+		"gradient": {
+			"enabled": true,
+			"percentage": 100
+		},
+		"canvasPadding": {
+			"top": 10,
+			"left": 5
+		}
+	},
+	"callbacks": {}
+	
+});
+
+
+
+})
+        .catch(function(error){
+            console.log(error);
+        });
+</script>
+
+</body>
+</html>

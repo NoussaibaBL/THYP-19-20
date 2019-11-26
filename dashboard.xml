@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+ <head>
+  <title>mes infos</title>
+  <type>Private</type>
+  <creationDate>2019-11-24 21:55:25</creationDate>
+ </head>
+ <body>
+  <outline title="mes infos actualites" icon="sheet" iconColor="green" cols="3" layout="3-2">
+   <outline title="Journal du Geek" xmlUrl="https://www.journaldugeek.com/feed/" htmlUrl="https://www.journaldugeek.com/" type="rss" row="31.25" col="1"/>
+   <outline title="Les derniers livres de Futura-Sciences" xmlUrl="https://www.futura-sciences.com/rss/livres.xml" htmlUrl="https://www.futura-sciences.com/" type="rss" row="62.5" col="1"/>
+   <outline type="ExtendedVibes" title="Tumblr: 'smart mirror'" row="500" col="1">
+    <outline searchType="blog" streamTypes="tumblr-tag" mySearch="smart mirror" activeTab="tumblr-tag" searchHistory="[&quot;smart mirror&quot;,&quot;netvibes&quot;]" lightVersion="false"/>
+   </outline>
+   <outline type="ExtendedVibes" title="News Recherche : 'le réchauffement climatique'" row="1000" col="1">
+    <outline searchType="news" streamTypes="google-news,bing-news,exalead-news" mySearch="le réchauffement climatique" activeTab="bing-news" searchHistory="[&quot;le réchauffement climatique&quot;,&quot;le réchaufement climatique&quot;,&quot;le monde&quot;,&quot;netvibes&quot;]" lightVersion="false"/>
+   </outline>
+   <outline type="TodoList" title="To Do List" row="31.25" col="2"/>
+   <outline title="Les dernières actualités de Futura-Sciences" xmlUrl="https://www.futura-sciences.com/rss/actualites.xml" htmlUrl="https://www.futura-sciences.com/" type="rss" row="62.5" col="2"/>
+   <outline title="CNRS Le journal" xmlUrl="https://lejournal.cnrs.fr/rss/?feed=rss" htmlUrl="https://lejournal.cnrs.fr/" type="rss" row="125" col="2"/>
+   <outline title="Bocasay" xmlUrl="https://www.bocasay.com/fr/?feed=rss" htmlUrl="https://www.bocasay.com/" type="rss" row="250" col="2"/>
+   <outline type="Weather" title="Le Bourget, France" row="500" col="2">
+    <outline unit="1" town="48.934/2.424"/>
+   </outline>
+   <outline title="Hitek : actualité geek et tests high tech" xmlUrl="https://hitek.fr/rss" htmlUrl="https://hitek.fr/" type="rss" row="1000" col="2"/>
+   <outline title="Les derniers dossiers de Futura-Sciences" xmlUrl="https://www.futura-sciences.com/rss/dossiers.xml" htmlUrl="https://www.futura-sciences.com/" type="rss" row="62.5" col="3"/>
+   <outline title="Pour la Science" xmlUrl="https://www.pourlascience.fr/rss.xml" htmlUrl="https://www.pourlascience.fr/" type="rss" row="250" col="3"/>
+   <outline type="PotionWizard" title="data information " row="1000" col="3">
+    <outline preconfigData="{&quot;title&quot;:&quot;data information &quot;,&quot;glue&quot;:2,&quot;actions&quot;:[{&quot;id&quot;:78755,&quot;status&quot;:&quot;active&quot;,&quot;potionId&quot;:&quot;02935ca6-0814-11ea-adbe-a0369fec9378&quot;,&quot;ingredient&quot;:&quot;com.twitter&quot;,&quot;reference&quot;:&quot;favorite&quot;,&quot;name&quot;:&quot;com.twitter.favorite&quot;,&quot;type&quot;:1,&quot;config&quot;:{&quot;general&quot;:{&quot;connect_id&quot;:&quot;1548014&quot;,&quot;tweet&quot;:[{&quot;tweets&quot;:true}]},&quot;once&quot;:false,&quot;description&quot;:&quot;Avec le compte \&quot;Noussaiba BL\&quot;&quot;},&quot;createdAt&quot;:1573869262,&quot;updatedAt&quot;:null}],&quot;triggers&quot;:[{&quot;id&quot;:81048,&quot;status&quot;:&quot;active&quot;,&quot;potionId&quot;:&quot;02935ca6-0814-11ea-adbe-a0369fec9378&quot;,&quot;ingredient&quot;:&quot;com.twitter&quot;,&quot;reference&quot;:&quot;new_tweet&quot;,&quot;name&quot;:&quot;com.netvibes.dashboard.{id}.stream.{uuid}.tweet.new&quot;,&quot;event&quot;:&quot;com.netvibes.dashboard.98600904.stream.02a2076a-0814-11ea-8fa0-a0369fec9378.tweet.new&quot;,&quot;config&quot;:{&quot;formulaHelpers&quot;:{&quot;hashtag&quot;:[],&quot;word&quot;:[&quot;data information&quot;],&quot;from&quot;:[],&quot;hasImages&quot;:false,&quot;excludeRetweets&quot;:false,&quot;excludeReplies&quot;:false},&quot;formula&quot;:&quot;content contains \&quot;data information\&quot;&quot;,&quot;mode&quot;:&quot;basic&quot;,&quot;general&quot;:{&quot;id&quot;:&quot;98600904&quot;,&quot;connectId&quot;:&quot;1548014&quot;,&quot;uuid&quot;:&quot;02a2076a-0814-11ea-8fa0-a0369fec9378&quot;},&quot;backlog&quot;:{&quot;type&quot;:&quot;count&quot;,&quot;count&quot;:1},&quot;timezone&quot;:&quot;Europe\/Paris&quot;,&quot;description&quot;:&quot;avec le compte \&quot;Noussaiba BL\&quot;&quot;},&quot;newestBucket&quot;:0,&quot;newestBucketSize&quot;:478,&quot;oldestBucket&quot;:0,&quot;createdAt&quot;:1573869262,&quot;updatedAt&quot;:1573869262}]}"/>
+   </outline>
+   <outline title="On holidays again - Blog voyage chic et cosy » Flux" xmlUrl="https://onholidaysagain.com/feed/" htmlUrl="https://onholidaysagain.com/" type="rss" row="2000" col="3"/>
+  </outline>
+  <outline title="sites marchands" cols="3" layout="3-0"/>
+  <outline title="la presse" cols="3" layout="3-0">
+   <outline title="International : Toute l’actualité sur Le Monde.fr." xmlUrl="https://www.lemonde.fr/international/rss_full.xml" htmlUrl="https://www.lemonde.fr/international/rss_full.xml" type="rss" row="500" col="1"/>
+   <outline title="Le Figaro - Actualité en direct et informations en continu" xmlUrl="https://www.lefigaro.fr/rss/figaro_actualites.xml" htmlUrl="http://www.lefigaro.fr/" type="rss" row="1500" col="1"/>
+   <outline title="Économie : Toute l’actualité sur Le Monde.fr." xmlUrl="https://www.lemonde.fr/economie/rss_full.xml" htmlUrl="https://www.lemonde.fr/economie/rss_full.xml" type="rss" row="250" col="2"/>
+   <outline title="Le Figaro - Politique - L'actualité du gouvernement et de l'opposition" xmlUrl="https://www.lefigaro.fr/rss/figaro_politique.xml" htmlUrl="http://www.lefigaro.fr/" type="rss" row="1000" col="2"/>
+   <outline title="Le Figaro - Voyages : redécouvrez les balades familiales ou partez à la découverte du patrimoine." xmlUrl="https://www.lefigaro.fr/rss/figaro_voyages.xml" htmlUrl="http://www.lefigaro.fr/" type="rss" row="500" col="3"/>
+   <outline title="Le Figaro - International : Actualité internationale en direct" xmlUrl="https://www.lefigaro.fr/rss/figaro_international.xml" htmlUrl="http://www.lefigaro.fr/" type="rss" row="1000" col="3"/>
+  </outline>
+  <outline title="blogs de loisirs" cols="3" layout="3-0">
+   <outline title="LaNutrition.fr" xmlUrl="https://www.lanutrition.fr/rss.xml" htmlUrl="https://www.lanutrition.fr/" type="rss" row="500" col="1"/>
+   <outline title="Sports.fr" xmlUrl="http://www.sports.fr/fr/cmc/rss.xml" htmlUrl="http://www.sports.fr/" type="rss" row="500" col="2"/>
+   <outline title="cuisine-facile.com" xmlUrl="https://cuisine-facile.com/rss-news.xml" htmlUrl="https://cuisine-facile.com/index.php" type="rss" row="1000" col="2"/>
+   <outline title="LaNutrition.fr - Information Alimentation, Santé, Guide de nutrition" xmlUrl="https://www.lanutrition.fr/articles/rss/articles.xml" htmlUrl="https://www.lanutrition.fr/" type="rss" row="500" col="3"/>
+   <outline title="cuisine-facile.com" xmlUrl="https://cuisine-facile.com/rss-blog.xml" htmlUrl="https://cuisine-facile.com/index.php" type="rss" row="1000" col="3"/>
+  </outline>
+ </body>
+</opml>
